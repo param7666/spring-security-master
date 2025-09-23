@@ -1,20 +1,14 @@
 package com.nt.controller;
 
-import java.lang.ProcessBuilder.Redirect;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.nt.model.User;
+import com.nt.model.AppUser;
 import com.nt.service.IUserService;
-
-import jakarta.servlet.http.HttpSession;
 
 //@RestController
 //@RequestMapping("/sec-app")
@@ -30,12 +24,12 @@ public class UserController {
 	}
 	
 	@GetMapping("/reg")
-	public String register(@ModelAttribute("user")User u) {
+	public String register(@ModelAttribute("user")AppUser u) {
 		return "reg";
 	}
 	
 	@PostMapping("/reg")
-	public String register(@ModelAttribute("user") User u, RedirectAttributes atrs) {
+	public String register(@ModelAttribute("user") AppUser u, RedirectAttributes atrs) {
 		String message=ser.register(u);
 		atrs.addFlashAttribute(message);
 		System.out.println(message);
@@ -43,21 +37,16 @@ public class UserController {
 	}
 	
 	@GetMapping("/login")
-	public String login(@ModelAttribute("user")User u) {
+	public String login(@ModelAttribute("user")AppUser u) {
 		return "login";
 	}
 
-	@PostMapping("/login")
-	public String login(@ModelAttribute("user") User u, HttpSession ses,RedirectAttributes atrs) {
-		System.out.println("UserController.login()");
-		User user=ser.login(u.getUserName(), u.getPassword());
-		if(user!=null) {
-			ses.setAttribute("user", user);
-			return "dashboard";
-		} else {
-			atrs.addFlashAttribute("msg","Login Fail....");
-			System.out.println("Login Fail....");
-			return "redirect:/";
-		}
+	@GetMapping("/dashboard")
+	public String dashboard() {
+		System.out.println("UserController.dashboard()");
+		return "dashboard";
 	}
+
+	
+	
 }

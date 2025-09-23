@@ -1,13 +1,15 @@
 package com.nt.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.nt.model.User;
+import com.nt.model.AppUser;
 
-public interface UserRepo extends JpaRepository<User, Long> {
+public interface UserRepo extends JpaRepository<AppUser, Long> {
 	
-	@Query("from User where userName=?1 and password=?2")
-	public User login(String userName,String password);
+	@Query("from AppUser where userName = ?1")
+	Optional<AppUser> findByUsername(String username);
 
 }

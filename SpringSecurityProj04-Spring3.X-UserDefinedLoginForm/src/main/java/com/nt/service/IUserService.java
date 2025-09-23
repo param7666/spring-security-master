@@ -1,9 +1,11 @@
 package com.nt.service;
 
-import com.nt.model.User;
+import java.util.Optional;
+
+import com.nt.model.AppUser;
 
 public interface IUserService {
 
-	public String register(User user);
-	public User login(String userName,String pass);
+	public String register(AppUser user);
+	//public Optional<User> login(String userName,String pass);
 }
